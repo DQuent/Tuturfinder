@@ -1,0 +1,50 @@
+annonces_reservation:
+    resource: "@AnnoncesBundle/Controller/ReservationController.php"
+    type:     annotation
+
+roles_voiture:
+    resource: "@RolesBundle/Controller/VoitureController.php"
+    type:     annotation
+
+annonces_annonce:
+    resource: "@AnnoncesBundle/Controller/AnnonceController.php"
+    type:     annotation
+
+roles_utilisateur:
+    resource: "@RolesBundle/Controller/UtilisateurController.php"
+    type:     annotation
+
+roles_utilisateur:
+    resource: "@RolesBundle/Controller/UtilisateurController.php"
+    type:     annotation
+
+roles_utilisateur:
+    resource: "@RolesBundle/Controller/UtilisateurController.php"
+    type:     annotation
+
+
+annonces_annonce:
+    resource: "@AnnoncesBundle/Controller/AnnonceController.php"
+    type:     annotation
+
+roles_utilisateur:
+    resource: "@RolesBundle/Controller/UtilisateurController.php"
+    type:     annotation
+
+annonces:
+    resource: "@AnnoncesBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+roles_voiture:
+    resource: "@RolesBundle/Controller/VoitureController.php"
+    type:     annotation
+
+
+roles:
+    resource: "@RolesBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

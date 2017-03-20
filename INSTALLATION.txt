@@ -1,0 +1,15 @@
+1. Le mot de passe et le login de PhpMyAdmin est par défaut : "root" et mdp "123". Il faut les adapter à votre base via le fichier "TuturFinder/app/config/parameters.yml" 
+2. Via l’invité de commande se placer dans le dossier TuturFinder
+3. Lancer les commandes  :  
+
+	php bin/console doctrine:database:create 
+	php bin/console server:run
+
+4. Relancer un invité de commande et se placer comme avant dans le dossier TuturFinder et faire les commandes suivantes :
+	 
+	 php bin/console doctrine:schema:update --dump-sql --force
+
+5. Se rendre sur phpMyAdmin
+6. Importer le fichier "TUPLES.sql" pour obtenir des tuples d'exemples.
+7. Aller sur localhost:8000
+8. Créer un compte ou utiliser email : "thib2@1" mdp : 123

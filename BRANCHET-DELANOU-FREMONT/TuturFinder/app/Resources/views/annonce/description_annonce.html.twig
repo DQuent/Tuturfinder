@@ -1,0 +1,317 @@
+{% extends my_theme %}
+
+{% block body %}
+
+
+
+
+    {{ block('nav_bar') }}
+
+<div id="page-wrapper">
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    <div class="text-blue">
+                        <h1>
+                            <i class="fa fa-support"></i> Annonce selectionnée : </h1></div>
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <div class="col-lg-12">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-tasks fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">Profil Annonceur</div>
+                                <div>avec ses informations personnels</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <div class="text-blue">
+                                                <li>
+                                                    <label>Son Nom: {{ annonceur.nom }} </label>
+                                                </li>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="text-blue">
+                                                <li>
+                                                    <label>Son Prenom: {{ annonceur.prenom }} </label>
+                                                </li>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="text-blue">
+                                                <li>
+                                                    <label> <i class="fa fa-fw fa-phone"></i> Son
+                                                        tel: {{ annonceur.telephone }} </label>
+                                                </li>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="text-blue">
+                                                <li>
+                                                    <label><i class="fa fa-fw fa-envelope"></i> Son
+                                                        email: {{ annonceur.email }}</label>
+                                                </li>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="text-blue">
+                                                <li>
+                                                    <label>Son age: {{ annonceur.age }} </label>
+                                                </li>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="text-blue">
+                                                <li>
+                                                    <i class="fa fa-fw fa-car"></i>
+                                                    <label>Sa voiture: {{ annonceur.voitureId }} </label>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-orange">
+                                            <div class="panel-heading">
+                                                <div class="row">
+                                                    <div class="col-xs-3">
+                                                        <i class="fa fa-support fa-5x"></i>
+                                                    </div>
+                                                    <div class="col-xs-9 text-right">
+                                                        <div class="huge">{{ add.titre }}</div>
+                                                        <div>Description de l'annonce selectionnée</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="text-orange">
+                                                            <li><label> Titre de l'annonce : </label> {{ add.titre }}
+                                                            </li>
+                                                        </div>
+                                                        <div class="text-orange">
+                                                            <li><label> Ville de départ : </label> {{ add.villeDep }}
+                                                            </li>
+                                                        </div>
+                                                        <div class="text-orange">
+                                                            <li>
+                                                                <label> Ville d'arrivée : </label> {{ add.villeArr }}
+                                                            </li>
+                                                        </div>
+
+                                                        <div class="text-orange">
+                                                            <li>
+                                                                <label> Nombre de places disponibles
+                                                                    : </label> {% set foo = add.getArrayPassagers|length %} {{ add.nbPlaces - foo }}
+                                                            </li>
+                                                        </div>
+                                                        <div class="text-orange">
+                                                            <li>
+                                                                <label> Prix par place : </label> {{ add.prix }}
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="text-orange">
+                                                                <li>
+                                                                    <label>Possibilité de faire un détour maximun de
+                                                                        :</label> {{ add.dureeDetour }}
+                                                                </li>
+                                                            </div>
+                                                            <div class="text-orange">
+                                                                <li>
+                                                                    <label> Date de départ
+                                                                        :</label> {{ add.dateDep|date('Y-m-d') }}
+                                                                </li>
+                                                            </div>
+                                                            <div class="text-orange">
+                                                                <li>
+                                                                    <label> Heure de départ
+                                                                        :</label> {{ add.dateDep|date('H:i:s') }}
+                                                                </li>
+                                                            </div>
+                                                            <div class="text-orange">
+                                                                <li>
+                                                                    <label> Date d'arrivée
+                                                                        :</label> {{ add.dateArr|date('Y-m-d') }}
+                                                                </li>
+                                                            </div>
+                                                            <div class="text-orange">
+                                                                <li>
+                                                                    <label> Heure d'arrivée
+                                                                        :</label> {{ add.dateArr|date('H:i:s') }}
+                                                                </li>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <br>
+                                                            <div class="text-orange"><label>Description
+                                                                    : </label> {{ add.description }}
+                                                            </div>
+                                                            <div class="text-orange" style="text-align:center">
+                                                                <br>
+                                                                <form action="{{ path('reservation_place', {id: add.getId()} ) }}">
+                                                                    <button type="submit" class="btn btn-lg btn-warning"
+                                                                            action="index_action_complete.html"><i
+                                                                                class="fa fa-fw fa-shopping-cart"></i>Reserver
+                                                                        la place
+                                                                    </button>
+                                                                </form>
+                                                                <form action="{{ path('recherche_annonce') }}"
+                                                                      method="GET">
+                                                                    <button type="submit"
+                                                                            class="btn btn-lg btn-warning"><i
+                                                                                class="fa fa-fw fa-arrow-circle-left"></i>Revenir
+                                                                        sur la <br> page précédente
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <!-- /#page-wrapper -->
+
+                                                </div>
+                                                <!-- /#wrapper -->
+
+
+                                                <!-- /.Météo -->
+
+                                                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+                                                     aria-labelledby="mySmallModalLabel">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading">
+                                                                            <h3 class="panel-title"><i
+                                                                                        class="fa fa-bar-chart-o fa-sun-o"></i>
+                                                                                Météo Nantes
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div id="cont_NDQxMDl8M3wxfDR8NHwzMzc5Yjd8MXxmMGFkNGV8Y3wx">
+                                                                            <div id="spa_NDQxMDl8M3wxfDR8NHwzMzc5Yjd8MXxmMGFkNGV8Y3wx">
+                                                                                <a
+                                                                                        id="a_NDQxMDl8M3wxfDR8NHwzMzc5Yjd8MXxmMGFkNGV8Y3wx"
+                                                                                        href="http://www.meteocity.com/france/nantes_v44109/"
+                                                                                        target="_blank"
+                                                                                        style="color:#333;text-decoration:none;">Météo
+                                                                                    Nantes</a>
+                                                                                <script type="text/javascript"
+                                                                                        src="http://widget.meteocity.com/js/NDQxMDl8M3wxfDR8NHwzMzc5Yjd8MXxmMGFkNGV8Y3wx"></script>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- /.Météo -->
+
+
+                                                <!-- Traffic -->
+
+                                                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+                                                     aria-labelledby="myLargeModalLabel">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+
+                                                            <div class="modal-content">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="panel panel-default">
+                                                                            <div class="panel-heading">
+                                                                                <h3 class="panel-title"><i
+                                                                                            class="fa fa-bar-chart-o fa-car"></i>
+                                                                                    Traffic
+                                                                                    Ouest
+                                                                                </h3>
+                                                                            </div>
+                                                                            <table border="0" cellspacing="3"
+                                                                                   cellpadding="0" bgcolor="#000066"
+                                                                                   style="font-family:Arial,Helvetica,sans-serif; font-size:12px; line-height:1.2; font-weight:bold;">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <script type="text/javascript"
+                                                                                                src="http://www.infotrafic.com/js/affiliate.js.php?Affi=86eb987737590dd9fd7ed100ffe49602"></script>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <!-- /.Traffic -->
+
+
+                                            <!-- jQuery -->
+                                            <script src="{{ asset('js/jquery.js') }}"></script>
+
+                                            <!-- Bootstrap Core JavaScript -->
+                                            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+                                            <!-- Morris Charts JavaScript -->
+                                            <script src="{{ asset('js/plugins/morris/raphael.min.js') }}"></script>
+                                            <script src="{{ asset('js/plugins/morris/morris.min.js') }}"></script>
+                                            <script src="{{ asset('js/plugins/morris/morris-data.js') }}"></script>
+
+
+                                            <script src="{{ asset('js/home.js') }}"></script>
+
+                                            {% endblock %}

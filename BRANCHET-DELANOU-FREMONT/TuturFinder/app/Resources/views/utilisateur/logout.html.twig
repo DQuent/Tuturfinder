@@ -1,0 +1,41 @@
+
+{% extends 'baseLogInOut.html.twig' %}
+
+{% block body %}
+<body onload="getClasses()">
+<div class="login">
+
+    <div class="login-triangle"></div>
+
+    <h2 class="login-header">Connexion</h2>
+
+    <div class="formulaireTwig">
+            {{ form_start(form, {'action': path('myhomepage'), 'method': 'POST'}) }}
+ 
+ 
+            {{ form_widget(form.email) }}
+ 
+            {{ form_widget(form.mdp) }}
+            <input value="Se Connecter" type="submit"/>
+        </form>
+
+        <input type="button" name="bouton_visite" value="Connexion Anonyme"
+               onclick="javascript:location.href='{{path('utilisateur_anonyme')}}'">
+
+        <input type="button" name="bouton_visite" value="Inscription"
+               onclick="javascript:location.href='{{ path('_new')}}'">
+    </div>
+
+<h1>{{session}}</h1>
+</div>
+
+
+
+<!-- jQuery -->
+<script src="{{ asset('js/jquery.js')}}"></script>
+
+<!-- JavaScript -->
+<script type="text/javascript" src="{{ asset('js/login.js')}}"></script>
+
+
+{% endblock %}

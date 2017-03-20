@@ -1,0 +1,49 @@
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Inscription</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{asset('css/login.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('css/bootstrap-flatly-3.3.7.min.css') }}" type="text/css" >
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<div class="login">
+    <div class="login-triangle"></div>
+
+    <h2 class="login-header">Inscrition</h2>
+
+    <form class="login-container" action="{{path('inscription_complete')}}" method="POST">
+        <p><input name="email" type="email" name="email" placeholder="Email"></p>
+        <p><input name="mdp" type="password" name="mdp" placeholder="Password"></p>
+        <p><input name="nom" type="text" name="nom" placeholder="Nom"></p>
+        <p><input name="prenom" type="text" name="prenom" placeholder="Prenom"></p>
+        <p> <em> <div style="text-align: center">* Il vous sera possible d'ajouter des informations à votre compte dans vos Settings après l'inscription </div> </em> </p>
+        <p><input type="submit" value="S'inscrire"></p>
+        <p><input type="button" onclick="javascript:location.href='{{path('login')}}'" value="Annuler l'inscription"></p>
+    </form>
+</div>
+
+
+</body>
+</html>

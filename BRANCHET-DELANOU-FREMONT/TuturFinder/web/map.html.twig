@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TuturFinder</title>
+            
+        <!-- Custom Fonts -->
+        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    
+<!-- Autocomplete  -->
+    <link rel="stylesheet" href="{{asset('js/AutoComplete/easy-autocomplete.min.css')}}">
+
+    <!-- Additional CSS Themes file - not required-->
+    <link rel="stylesheet" href="{{asset('js/AutoComplete/easy-autocomplete.themes.min.css')}}">
+<!-- Autocomplete  -->
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
+    <!-- Animated popups -->
+
+
+    <!-- Custom Fonts -->
+    <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        #map {
+            height: 100%;
+        }
+
+        #floating-panel {
+            position: absolute;
+            top: 10px;
+            left: 25%;
+            z-index: 5;
+            background-color: #fff;
+            padding: 5px;
+            border: 1px solid #999;
+            text-align: center;
+            font-family: 'Roboto', 'sans-serif';
+            line-height: 30px;
+            padding-left: 10px;
+        }
+
+        #right-panel {
+            font-family: 'Roboto', 'sans-serif';
+            line-height: 30px;
+            padding-left: 10px;
+        }
+
+        #right-panel select, #right-panel input {
+            font-size: 15px;
+        }
+
+        #right-panel select {
+            width: 100%;
+        }
+
+        #right-panel i {
+            font-size: 12px;
+        }
+
+        #right-panel {
+            height: 100%;
+            float: right;
+            width: 390px;
+            overflow: auto;
+        }
+
+        #map {
+            margin-right: 400px;
+        }
+
+        #floating-panel {
+            background: #fff;
+            padding: 5px;
+            font-size: 14px;
+            font-family: Arial;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+            display: none;
+        }
+
+        @media print {
+            #map {
+                height: 500px;
+                margin: 0;
+            }
+
+            #right-panel {
+                float: none;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <tr>
+
+            <td>
+                <label> Ville de départ : </label><input id="ville_depart" placeholder="Ex: Nantes">
+            </td>
+            <td>
+                <label> Ville d'arrivée : </label> <input id="ville_arrivee" placeholder="Ex: Barcelone">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                </br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="btn btn-lg btn-primary" id="calcul_it" type="button" onclick="calculerI();"
+                       value="Calculer l'itinéraire">
+            </td>
+        </tr>
+    </table>
+    </br>
+
+<!-- Google Map -->
+<div id="floating-panel">
+    <strong>Ville de départ :</strong>
+    <select id="start">
+        <option value="paris, fr">Paris</option>
+    </select>
+    <br>
+    <strong>Ville d'arrivée :</strong>
+    <select id="end">
+        <option value="nantes, fr">Nantes</option>
+    </select>
+</div>
+<div id="right-panel"></div>
+<div id="map"></div>
+<!-- /.Google Map -->
+
+
+<script>
+    function initMap() {
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        var directionsService = new google.maps.DirectionsService;
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: {lat: 47.23, lng: -1.6}
+        });
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('right-panel'));
+
+        var control = document.getElementById('floating-panel');
+        control.style.display = 'block';
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
+        var onClickHandler = function () {
+            calculateAndDisplayRoute(directionsService, directionsDisplay);
+        };
+        document.getElementById('calcul_it').addEventListener('click', onClickHandler);
+    }
+
+    function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        var start = document.getElementById('start').value;
+        var end = document.getElementById('end').value;
+        directionsService.route({
+            origin: start,
+            destination: end,
+            travelMode: google.maps.TravelMode.DRIVING
+        }, function (response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    }
+
+
+    var options = {
+        url: "villes_france.json",
+
+        getValue: "ville",
+
+        list: {
+            match: {
+                enabled: true
+            }
+        }
+    };
+
+    function AutoC() {
+        $("#ville_depart").easyAutocomplete(options);
+        $("#ville_arrivee").easyAutocomplete(options);
+    }
+    ;
+
+    function calculerI() {
+        var villeD = $("#ville_depart").val();
+        var villeA = $("#ville_arrivee").val();
+
+        $('#start').replaceWith("<select id='start'><option value='" + villeD + "', fr'>" + villeD + " </option></select>");
+        $('#end').replaceWith("<select id='end'><option value='" + villeA + "', fr'>" + villeA + " </option></select>");
+    }
+    ;
+
+    window.onload = AutoC;
+
+
+</script>
+
+<!-- Using jQuery with a CDN -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
+<!-- JS file -->
+<script src="{{ asset('js/AutoComplete/jquery.easy-autocomplete.min.js') }}"></script>
+
+
+<!-- Google API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDski2baQy8LvleFvpdbovIVIo_AaRk1hM&signed_in=true&callback=initMap"
+        async defer></script>
+
+
+</body>
+</html>

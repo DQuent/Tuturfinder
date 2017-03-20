@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Annonces list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Datedep</th>
+                <th>Datearr</th>
+                <th>Id_annonceur</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Nbplaces</th>
+                <th>Dureedetour</th>
+                <th>Prix</th>
+                <th>Villedep</th>
+                <th>Villearr</th>
+                <th>Adressedep</th>
+                <th>Adressearr</th>
+                <th>Id_conducteur</th>
+                <th>Array_passagers</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for annonce in annonces %}
+            <tr>
+                <td><a href="{{ path('annonce_show', { 'id': annonce.id }) }}">{{ annonce.id }}</a></td>
+                <td>{% if annonce.dateDep %}{{ annonce.dateDep|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if annonce.dateArr %}{{ annonce.dateArr|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ annonce.idannonceur }}</td>
+                <td>{{ annonce.titre }}</td>
+                <td>{{ annonce.description }}</td>
+                <td>{{ annonce.nbPlaces }}</td>
+                <td>{{ annonce.dureeDetour }}</td>
+                <td>{{ annonce.prix }}</td>
+                <td>{{ annonce.villeDep }}</td>
+                <td>{{ annonce.villeArr }}</td>
+                <td>{{ annonce.adresseDep }}</td>
+                <td>{{ annonce.adresseArr }}</td>
+                <td>{{ annonce.idconducteur }}</td>
+                <td>{% if annonce.arraypassagers %}{{ annonce.arraypassagers|join(', ') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('annonce_show', { 'id': annonce.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('annonce_edit', { 'id': annonce.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('annonce_new') }}">Create a new annonce</a>
+        </li>
+    </ul>
+{% endblock %}

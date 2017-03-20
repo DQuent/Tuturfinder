@@ -1,0 +1,330 @@
+
+   {% extends my_theme %}
+
+{% block body %}
+
+
+    {{ block('nav_bar') }}
+
+    <div id="page-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <!--Message erreur -->
+                <div class="alert alert-danger" style="text-align: center">
+                    <strong>Erreur!</strong> Le formulaire est incomplet ou mal remplit
+                </div>
+                    <!--Message erreur -->
+                </div>
+            </div>
+            <!-- /.row -->
+
+
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        <i class="fa fa-car"></i> Ajout d'un covoiturage
+                    </h1>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Champs à remplir </h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form role="form" action="{{ path('action_add_annonce_complete') }}" method="POST">
+
+                                        <div class="form-group">
+                                            <label>Titre de l'annonce </label>
+                                            <input name="titre" type="text" class="form-control"
+                                                   placeholder="Ex : Mon covoit' génial ! ">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Ville de départ </label>
+                                            <input name="villeDep" type="text" class="form-control" id="ville_depart"
+                                                   placeholder="Ex : Paris ">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Ville d'arrivée </label>
+                                            <input name="villeArr" type="text" class="form-control" id="ville_arrivee"
+                                                   placeholder="Ex : Nantes ">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Nombre de places disponibles : </label>
+                                            <input name="nbPlaces" type="text" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea name="description" class="form-control" rows="3"></textarea>
+                                        </div>
+
+                                        <button type="reset" class="btn btn-lg btn-primary">Vider les champs</button>
+
+
+                                    <br>
+
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Prix par place</label>
+                                    <div class="form-group input-group">
+                                        <input name="prix" type="text" class="form-control">
+                                        <span class="input-group-addon">€</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Possibilité de faire un detour maximun de</label>
+                                        <div class="form-group input-group">
+                                            <input name="detour" type="text" class="form-control">
+                                            <span class="input-group-addon">minutes </span>
+                                        </div>
+                                    </div>
+                                    <label>Date de départ</label>
+                                    <div>
+                                        <input name="dateDep" type="date" name="form-control">
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <label>Heure de départ</label>
+                                        <div>
+                                            <input name="heureDep" type="time" name="form-control">
+                                        </div>
+                                    </div>
+                                    <label>Date d'arrivée</label>
+                                    <div>
+                                        <input name="dateArr" type="date" name="form-control">
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <label>Heure d'arrivée</label>
+                                        <div>
+                                            <input name="heureArr" type="time" name="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-lg btn-primary">Finaliser l'ajout de
+                                    l'annonce
+                                </button>
+                                </form>
+                                <a href="#googleMap">
+                                    <button id="calcul_it" onclick="calculerI()" class="btn btn-lg btn-primary">
+                                        Calculer votre itinéraire
+                                    </button>
+                                </a>
+                            </div>
+                            <!-- /#page-wrapper -->
+                            </br>
+                            </br>
+                        </div>
+                        <!-- /#wrapper -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="googleMap" class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-map"></i>Calculer l'itinéraire</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="floating-panel">
+                            <strong>Départ :</strong>
+                            <select id="start">
+                                <option value="nantes, fr">Nantes</option>
+                            </select>
+                            <br>
+                            <strong>Arrivée :</strong>
+                            <select id="end">
+                                <option value="paris, fr">Paris</option>
+                            </select>
+                        </div>
+                        <div id="right-panel"></div>
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+
+
+    <script>
+
+        function initMap() {
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var directionsService = new google.maps.DirectionsService;
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: {lat: 47.23, lng: -1.6}
+            });
+            directionsDisplay.setMap(map);
+            directionsDisplay.setPanel(document.getElementById('right-panel'));
+
+            var control = document.getElementById('floating-panel');
+            control.style.display = 'block';
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
+            var onClickHandler = function () {
+                var center = map.getCenter();
+                google.maps.event.trigger(map, "resize");
+                map.setCenter(center);
+                calculateAndDisplayRoute(directionsService, directionsDisplay);
+            };
+            document.getElementById('calcul_it').addEventListener('click', onClickHandler);
+        }
+
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            var start = document.getElementById('start').value;
+            var end = document.getElementById('end').value;
+            directionsService.route({
+                origin: start,
+                destination: end,
+                travelMode: google.maps.TravelMode.DRIVING
+            }, function (response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+
+
+        var options = {
+            url: "{{ asset("villes_france.json") }}",
+
+            getValue: "ville",
+
+            list: {
+                match: {
+                    enabled: true
+                }
+            }
+        };
+
+        function AutoC() {
+            $("#ville_depart").easyAutocomplete(options);
+            $("#ville_arrivee").easyAutocomplete(options);
+        }
+        ;
+
+        function calculerI() {
+            var villeD = $("#ville_depart").val();
+            var villeA = $("#ville_arrivee").val();
+
+            $('#start').replaceWith("<select id='start'><option value='" + villeD + "', fr'>" + villeD + " </option></select>");
+            $('#end').replaceWith("<select id='end'><option value='" + villeA + "', fr'>" + villeA + " </option></select>");
+        }
+        ;
+
+        window.onload = AutoC;
+    </script>
+
+
+    <!-- /.Météo -->
+
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-sun-o"></i> Météo Nantes
+                                </h3>
+                            </div>
+                            <div id="cont_NDQxMDl8M3wxfDR8NHwzMzc5Yjd8MXxmMGFkNGV8Y3wx">
+                                <div id="spa_NDQxMDl8M3wxfDR8NHwzMzc5Yjd8MXxmMGFkNGV8Y3wx"><a
+                                            id="a_NDQxMDl8M3wxfDR8NHwzMzc5Yjd8MXxmMGFkNGV8Y3wx"
+                                            href="http://www.meteocity.com/france/nantes_v44109/"
+                                            target="_blank"
+                                            style="color:#333;text-decoration:none;">Météo
+                                        Nantes</a>
+                                    <script type="text/javascript"
+                                            src="http://widget.meteocity.com/js/NDQxMDl8M3wxfDR8NHwzMzc5Yjd8MXxmMGFkNGV8Y3wx"></script>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /.Météo -->
+
+
+
+    <!-- Traffic -->
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <div class="modal-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-car"></i> Traffic
+                                        Ouest
+                                    </h3>
+                                </div>
+                                <table border="0" cellspacing="3" cellpadding="0" bgcolor="#000066"
+                                       style="font-family:Arial,Helvetica,sans-serif; font-size:12px; line-height:1.2; font-weight:bold;">
+                                    <tr>
+                                        <td>
+                                            <script type="text/javascript"
+                                                    src="http://www.infotrafic.com/js/affiliate.js.php?Affi=86eb987737590dd9fd7ed100ffe49602"></script>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+    <!-- /.Traffic -->
+
+
+
+    <!-- Using jQuery with a CDN -->
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
+    <!-- JS file -->
+    <script src="{{ asset('js/AutoComplete/jquery.easy-autocomplete.min.js') }}"></script>
+
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+    <!-- Google API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDski2baQy8LvleFvpdbovIVIo_AaRk1hM&signed_in=true&callback=initMap"
+            async defer></script>
+
+{% endblock %}
